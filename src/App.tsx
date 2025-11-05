@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CoinCard from "./components/CoinCard";
 import getErrorMessage from "./helpers/getErrorMessage";
 import type { Coin } from "./types";
 const API_URL =
@@ -32,24 +33,7 @@ function App() {
       {!loading && !error && (
         <main className="grid">
           {coins.map((coin) => (
-            <div className="coin-card" key={`coin-${coin.id}`}>
-              <div className="coin-header">
-                <img src={coin.image} alt={coin.name} className="coin-image" />
-                <div>
-                  <h2>{coin.name}</h2>
-                  <p className="symbol">{coin.symbol.toUpperCase()}</p>
-                </div>
-              </div>
-              <p>Price: {coin.current_price}</p>
-              <p
-                className={
-                  coin.price_change_percentage_24h > 0 ? "positive" : "negative"
-                }
-              >
-                {coin.price_change_percentage_24h.toFixed(2)}%
-              </p>
-              <p>Market Cap: {coin.market_cap.toLocaleString()}</p>
-            </div>
+            <CoinCard coin={coin} key={`coin-${coin.id}`} />
           ))}
         </main>
       )}
