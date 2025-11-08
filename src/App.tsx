@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CoinCard from "./components/CoinCard";
+import FilterInput from "./components/FilterInput";
 import LimitSelector from "./components/LimitSelector";
 import getErrorMessage from "./helpers/getErrorMessage";
 import type { Coin } from "./types";
@@ -9,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(10);
+  const [filter, setFilter] = useState<string>("");
   useEffect(() => {
     fetchData();
   }, [limit]);
@@ -29,17 +31,29 @@ function App() {
       setLoading(false);
     }
   };
+  const filteredCoins = coins.filter(
+    (c) =>
+      c.name.toLowerCase().includes(filter.toLowerCase()) ||
+      c.symbol.toLowerCase().includes(filter.toLowerCase())
+  );
   return (
     <>
       <div>🚀 Crypto Pulse </div>
       {loading && <div>Loading.......</div>}
       {error && <div className="error">{error}</div>}
-      <LimitSelector limit={limit} onLimitChange={setLimit} />
+      <div className="top-controls">
+        <FilterInput filter={filter} onFilterChange={setFilter} />
+        <LimitSelector limit={limit} onLimitChange={setLimit} />
+      </div>
       {!loading && !error && (
         <main className="grid">
-          {coins.map((coin) => (
-            <CoinCard coin={coin} key={`coin-${coin.id}`} />
-          ))}
+          {filteredCoins.length ? (
+            filteredCoins.map((coin) => (
+              <CoinCard coin={coin} key={`coin-${coin.id}`} />
+            ))
+          ) : (
+            <p>No matched data</p>
+          )}
         </main>
       )}
     </>
