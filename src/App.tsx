@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CoinCard from "./components/CoinCard";
+import LimitSelector from "./components/LimitSelector";
 import getErrorMessage from "./helpers/getErrorMessage";
 import type { Coin } from "./types";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -33,21 +34,7 @@ function App() {
       <div>🚀 Crypto Pulse </div>
       {loading && <div>Loading.......</div>}
       {error && <div className="error">{error}</div>}
-      <div className="controls">
-        <label htmlFor="limit">Show: </label>
-        <select
-          id="limit"
-          value={limit}
-          onChange={(e) => setLimit(Number(e.target.value))}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="40">40</option>
-          <option value="80">80</option>
-          <option value="100">100</option>
-        </select>
-      </div>
+      <LimitSelector limit={limit} onLimitChange={setLimit} />
       {!loading && !error && (
         <main className="grid">
           {coins.map((coin) => (
