@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import CoinCard from "./components/CoinCard";
-import FilterInput from "./components/FilterInput";
-import LimitSelector from "./components/LimitSelector";
-import SortSelector from "./components/SortSelector";
+import { Route, Routes } from "react-router";
 import getErrorMessage from "./helpers/getErrorMessage";
+import HomePage from "./pages/Home";
 import type { Coin } from "./types";
 const API_URL = import.meta.env.VITE_API_URL;
 function App() {
@@ -33,53 +31,26 @@ function App() {
       setLoading(false);
     }
   };
-  const filteredCoins = coins
-    .filter(
-      (c) =>
-        c.name.toLowerCase().includes(filter.toLowerCase()) ||
-        c.symbol.toLowerCase().includes(filter.toLowerCase())
-    )
-    .slice()
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "market_cap_desc":
-          return b.market_cap - a.market_cap;
-        case "market_cap_asc":
-          return a.market_cap - b.market_cap;
-        case "price_desc":
-          return b.current_price - a.current_price;
-        case "price_asc":
-          return a.current_price - b.current_price;
-        case "change_desc":
-          return b.market_cap_change_24h - a.market_cap_change_24h;
-        case "change_asc":
-          return a.market_cap_change_24h - b.market_cap_change_24h;
-        default:
-          return 1;
-      }
-    });
+
   return (
-    <>
-      <div>🚀 Crypto Pulse </div>
-      {loading && <div>Loading.......</div>}
-      {error && <div className="error">{error}</div>}
-      <div className="top-controls">
-        <FilterInput filter={filter} onFilterChange={setFilter} />
-        <LimitSelector limit={limit} onLimitChange={setLimit} />
-        <SortSelector sort={sortBy} onSortChange={setSortBy} />
-      </div>
-      {!loading && !error && (
-        <main className="grid">
-          {filteredCoins.length ? (
-            filteredCoins.map((coin) => (
-              <CoinCard coin={coin} key={`coin-${coin.id}`} />
-            ))
-          ) : (
-            <p>No matched data</p>
-          )}
-        </main>
-      )}
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <HomePage
+            coins={coins}
+            loading={loading}
+            error={error}
+            limit={limit}
+            setLimit={setLimit}
+            filter={filter}
+            setFilter={setFilter}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
+        }
+      />
+    </Routes>
   );
 }
 
