@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import getErrorMessage from "./helpers/getErrorMessage";
 import AboutPage from "./pages/About";
 import HomePage from "./pages/Home";
+import NotFoundPage from "./pages/NotFoundPage";
 import type { Coin } from "./types";
 const API_URL = import.meta.env.VITE_API_URL;
 function App() {
@@ -55,6 +56,7 @@ function App() {
           }
         />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
