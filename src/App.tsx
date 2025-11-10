@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import getErrorMessage from "./helpers/getErrorMessage";
+import AboutPage from "./pages/About";
 import HomePage from "./pages/Home";
 import type { Coin } from "./types";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -50,6 +51,7 @@ function App() {
           />
         }
       />
+      <Route path="/about" element={<AboutPage />} />
     </Routes>
   );
 }
