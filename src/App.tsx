@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router";
 import Header from "./components/Header";
 import getErrorMessage from "./helpers/getErrorMessage";
 import AboutPage from "./pages/About";
+import CoinDetailsPage from "./pages/CoinDetails";
 import HomePage from "./pages/Home";
 import NotFoundPage from "./pages/NotFoundPage";
 import type { Coin } from "./types";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_COINS_API_URL;
 function App() {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -56,6 +57,7 @@ function App() {
           }
         />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/coin/:id" element={<CoinDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
