@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import CoinChart from "../components/CoinChart";
 import Spinner from "../components/Spinner";
 import getErrorMessage from "../helpers/getErrorMessage";
 import type { CoinData } from "../types";
@@ -44,6 +45,7 @@ const CoinDetailsPage = () => {
             className="coin-details-image"
           />
           <p>{coin?.description.en.split(". ")[0] + "."}</p>
+          <CoinChart coinId={coin?.id ?? ""} />
           <div className="coin-details-info">
             <div className="coin-details-info">
               <h3>Rank: #{coin?.market_cap_rank}</h3>

@@ -108,3 +108,9 @@ export interface CurrencyValue {
 export interface CurrencyDate {
   usd: string;
 }
+
+export interface Prices {
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+}
