@@ -2,6 +2,7 @@ import CoinCard from "../components/CoinCard";
 import FilterInput from "../components/FilterInput";
 import LimitSelector from "../components/LimitSelector";
 import SortSelector from "../components/SortSelector";
+import Spinner from "../components/Spinner";
 import type { Coin } from "../types";
 
 type HomePageProps = {
@@ -15,6 +16,7 @@ type HomePageProps = {
   sortBy: string;
   setSortBy: (v: string) => void;
 };
+
 const HomePage = ({
   coins,
   loading,
@@ -54,13 +56,15 @@ const HomePage = ({
   return (
     <>
       <div>🚀 Crypto Pulse </div>
-      {loading && <div>Loading.......</div>}
-      {error && <div className="error">{error}</div>}
+
       <div className="top-controls">
         <FilterInput filter={filter} onFilterChange={setFilter} />
         <LimitSelector limit={limit} onLimitChange={setLimit} />
         <SortSelector sort={sortBy} onSortChange={setSortBy} />
       </div>
+
+      {loading && <Spinner loading={loading} color="white" />}
+      {error && <div className="error">{error}</div>}
       {!loading && !error && (
         <main className="grid">
           {filteredCoins.length ? (
