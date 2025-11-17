@@ -45,7 +45,7 @@ const CoinDetailsPage = () => {
             className="coin-details-image"
           />
           <p>{coin?.description.en.split(". ")[0] + "."}</p>
-          <CoinChart coinId={coin?.id ?? ""} />
+          <CoinChart coinId={id ?? ""} />
           <div className="coin-details-info">
             <div className="coin-details-info">
               <h3>Rank: #{coin?.market_cap_rank}</h3>

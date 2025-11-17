@@ -4,11 +4,15 @@ import {
   Chart as ChartJS,
   Legend,
   LinearScale,
+  LineElement,
   PointElement,
   TimeScale,
+  Title,
   Tooltip,
 } from "chart.js";
+import "chartjs-adapter-date-fns";
 import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 import getErrorMessage from "../helpers/getErrorMessage";
 import type { Prices } from "../types";
 // import { Line } from "react-chartjs-2";
@@ -20,8 +24,11 @@ ChartJS.register(
   CategoryScale,
   PointElement,
   LinearScale,
-  TimeScale
+  TimeScale,
+  LineElement,
+  Title
 );
+
 type CoinChartProps = {
   coinId: string;
 };
@@ -76,7 +83,48 @@ const CoinChart = ({ coinId }: CoinChartProps) => {
       setLoading(false);
     }
   };
-  return <div>Chart</div>;
+
+  return (
+    <div style={{ marginTop: "30px" }}>
+      {chartData && (
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top" as const,
+              },
+              tooltip: { mode: "index", intersect: false },
+              title: {
+                display: false,
+                // text: "Chart.js Line Chart",
+              },
+            },
+            scales: {
+              x: {
+                type: "time",
+                time: {
+                  unit: "day",
+                },
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 7,
+                },
+              },
+              y: {
+                ticks: {
+                  callback: (v) => {
+                    return `$${v.toLocaleString()}`;
+                  },
+                },
+              },
+            },
+          }}
+        />
+      )}
+    </div>
+  );
 };
 
 export default CoinChart;
