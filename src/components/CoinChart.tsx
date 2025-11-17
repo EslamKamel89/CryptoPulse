@@ -86,7 +86,7 @@ const CoinChart = ({ coinId }: CoinChartProps) => {
 
   return (
     <div style={{ marginTop: "30px" }}>
-      {chartData && (
+      {chartData && !loading && !error && (
         <Line
           data={chartData}
           options={{
